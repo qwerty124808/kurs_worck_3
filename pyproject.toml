@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "kurs-worck-3"
+version = "0.1.0"
+description = ""
+authors = ["altarev_da <altarev_da@nlmk.com>"]
+readme = "README.md"
+packages = [{include = "kurs_worck_3"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
