@@ -36,29 +36,25 @@ def out_data(last_five_operations):
     """
     for operation in last_five_operations:
         converting_date = datetime.strptime(operation.get("date"), "%Y-%m-%dT%H:%M:%S.%f")
-        date_operation = converting_date.strftime("%d.%m.%Y")
-        description = operation.get("description")
-        to_ = operation.get("to").split()
-        operationAmount = operation.get("operationAmount")
-        amount = operationAmount["amount"]
-        currency = operationAmount["currency"]
-        name = currency["name"]
+        date_operation = converting_date.strftime("%d.%m.%Y") # дата операции
+        description = operation.get("description")            # тип операции
+        to_ = operation.get("to").split()                     # куда перевод
+        operationAmount = operation.get("operationAmount")    # информация о сумме и валюте 
+        amount = operationAmount["amount"]                    # сумма
+        currency = operationAmount["currency"]                # информация о валюте
+        name = currency["name"]                               # валута
         if "from" in operation:
-            from_ = operation.get("from").split()
+            from_ = operation.get("from").split()             # откуда перевод
             if len(from_) != 2:
                 from_[0] = from_[0]+from_[1]
                 from_[1] = from_[2]
             print(f"{date_operation} {description}\n{from_[0]} {from_[1][0:4]} {from_[1][4:6]}** **** {from_[1][-4:]} -> {to_[0]} **{to_[1][-4:]}")
-            print(f"{amount} {name}\n")
-            
+            print(f"{amount} {name}\n")    
         else:
             from_ = ["",""]
             print(f"{date_operation} {description}\nОТКРЫТИЕ ВКЛАДА -> {to_[0]} **{to_[1][-4:]}")
             print(f"{amount} {name}\n")
-        
-
-        
-        
+                
 history_operations = reade_transactions_history()
 filter_history = filtered_transaction(history_operations)
 last_operations = last_operations(filter_history)
