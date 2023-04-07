@@ -5,7 +5,7 @@ def reade_transactions_history():
     """
         читает историю транзакций из operations.json
     """
-    with open("kurs_worck_3\operations.json", "r", encoding="utf-8") as file:
+    with open("kurs_worck_3/operations.json", "r", encoding="utf-8") as file:
         history_transaction = json.load(file)
         return(history_transaction)
 
@@ -19,6 +19,7 @@ def filtered_transaction(list_text):
             filter_text.append(item)
     sorted_text = sorted(filter_text, key=lambda row: row.get('date'), reverse=True)
     return sorted_text
+    
         
 def last_operations(sorted_text):
     """
@@ -34,6 +35,7 @@ def out_data(last_five_operations):
     """
         редактирует данные о последних 5 транзакциях и делает красивый вывод
     """
+    list_out = []
     for operation in last_five_operations:
         converting_date = datetime.strptime(operation.get("date"), "%Y-%m-%dT%H:%M:%S.%f")
         date_operation = converting_date.strftime("%d.%m.%Y") # дата операции
@@ -48,16 +50,14 @@ def out_data(last_five_operations):
             if len(from_) != 2:
                 from_[0] = from_[0]+from_[1]
                 from_[1] = from_[2]
-            print(f"{date_operation} {description}\n{from_[0]} {from_[1][0:4]} {from_[1][4:6]}** **** {from_[1][-4:]} -> {to_[0]} **{to_[1][-4:]}")
-            print(f"{amount} {name}\n")    
+            result_str_1 = f"{date_operation} {description}\n{from_[0]} {from_[1][0:4]} {from_[1][4:6]}** **** {from_[1][-4:]} -> {to_[0]} **{to_[1][-4:]}\n\
+{amount} {name}\n"
+            print(result_str_1)
+            list_out.append(result_str_1)    
         else:
             from_ = ["",""]
-            print(f"{date_operation} {description}\nОТКРЫТИЕ ВКЛАДА -> {to_[0]} **{to_[1][-4:]}")
-            print(f"{amount} {name}\n")
-                
-history_operations = reade_transactions_history()
-filter_history = filtered_transaction(history_operations)
-last_operations = last_operations(filter_history)
-data = out_data(last_operations)
-
-
+            result_str_2 = f"{date_operation} {description}\nОТКРЫТИЕ ВКЛАДА -> {to_[0]} **{to_[1][-4:]}\n\
+{amount} {name}\n"
+            print(result_str_2)
+            list_out.append(result_str_2)
+    return list_out
